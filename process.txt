@@ -1,0 +1,39 @@
+[NestJS 설치]
+npm install -g @nestjs/cli
+npm install -g yarn 
+
+
+[NestJS CRUD 개발 과정]
+nest new nest-curd-api
+cd nest-curd-api
+> .env - DATABASE_URL 수정(로컬에 설치된 데이터베이스 url로 수정) + prisma/schema.prisma - db: provider 값 변경(“mysql")
+rm -rf src/app.controller.spec.ts src/app.controller.ts src/app.service.ts
+> src/app.module.ts - controllers, providers 값 삭제
+> .eslintrc.js - rules 값 추가 ('prettier/prettier':0)
+yarn add prisma @prisma/client
+npx prisma init
+> prisma/schema.prisma - model 작성
+npx prisma migrate dev --name init
+touch src/prisma.service.ts
+> src/book/prisma.service.ts - prisma service 작성
+mkdir src/book
+touch src/book/book.model.ts
+> src/book/book.model.ts - book model 작성
+touch src/book/book.service.ts
+> src/book/book.service.ts - book service 작성
+touch src/book/book.controller.ts
+> src/book/book.controller.ts - book controller 작성
+touch src/book/book.module.ts
+> src/book/book.module.ts - book module 작성
+> src/app.module.ts - imports 값 작성(BookModule)
+완료(RUN: yarn start:dev)
+
+
+[DB URL 수정시]
+npx prisma migrate dev
+npx prisma db drop
+npx prisma db create
+npx prisma migrate dev
+rm -rf node_modules/.prisma
+npm install
+yarn add prisma @prisma/client
